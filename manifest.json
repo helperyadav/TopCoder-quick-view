@@ -1,0 +1,19 @@
+{
+  "name": "TopCoder Quick View",
+  "description": "Toolkit provides Package.xml out of change sets. Test coverage export functionality. Fast navigation to User detail.",
+  "version": "1.0.0",
+  "permissions": [
+		"cookies", 
+		"https://api.topcoder.com/*"
+  ],
+  "browser_action": {
+      "default_title": "TopCoder Quick View",
+      "default_popup": "index.html"
+  },
+  "icons": { 
+		"16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png" },
+		  
+  "manifest_version": 2
+}

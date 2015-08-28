@@ -1,0 +1,93 @@
+<!doctype html>
+<html ng-app="TOPCODERAPP">
+  <head>
+    <title>Top Coder</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <script src="js/jquery-2.1.4.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="js/challenges.js"></script>
+	<script src= "js/angular.min.js"></script>
+	<script src="js/popup.js"></script>
+  </head>
+
+  <body ng-controller="TCCtrl" style="min-width:650px;">
+	
+	<!--form class='form-inline'-->
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+					<nav class="navbar navbar-default navbar-static-top">
+						<div class="container">
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+									<span class="sr-only">Toggle navigation</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="#">BSY</a>
+							</div>
+						</div>
+					</nav>
+			</div>
+		    <div class="col-lg-12">
+				<div class="well">
+					<div>
+						<input ng-model="query" type="text" class="form-control" placeholder="Search any word..."></input>
+					</div>
+					<div><br/>
+						<span>Filter Type </span>
+						<div class="btn-group" >
+							<span  ng-repeat="f in Settings.FilterTypes">
+								<input type="checkbox" ng-checked="f.show"  ng-click="setUserSettings()" ng-model="f.show"> {{f.type}}
+							</span>
+						</div>
+					</div>
+				
+				</div>
+		    </div>
+		    <div class="col-lg-12">
+			
+			<div class="panel panel-default" ng-repeat="ch in challenges | challengeType:Settings | filter:query | orderBy:'postingDate': true">
+				<div class="panel-heading">
+					<div class='row'>
+						<div class='col-md-12'>
+							<div class="panel-title">
+								<a class="btn btn-default" ng-click="loadChallengeDetail(ch)" >
+									{{ch.challengeId}}</a> - 
+								<b><a href="https://www.topcoder.com/challenge-details/{{ch.challengeId}}" target="_blank">{{ch.challengeName}}</a></b>
+								<span  ng-switch="{{ch.isNew}}">
+									<span class="badge badge-success" ng-switch-when="true" title="Started within 24Hrs">New</span>
+								</span>
+							 </div>
+						</div>
+					</div>
+					<div class='row'>
+						<div class='col-lg-6 col-md-6'>
+							<span class="label label-info">{{ch.challengeType}}</span>
+							<span class="label label-success">{{ch.remainingDays}} Days</span>
+							<span class="label label-default">{{ch.numRegistrants + '/' + ch.numSubmissions}}</span>
+							
+							<span  ng-switch="{{ch.prize.length}}" >
+								<span class='label label-default' ng-switch-when="0"></span>
+								<span class='label label-default' ng-switch-default> {{'$' + ch.prize.join(', $')}} </span>
+							</span>
+							
+						</div>
+						<div class='col-lg-6 col-md-6'><p>Tech: {{ch.technologies.join(', ')}}</p></div>
+						<div class='col-lg-6 col-md-6' >Start: {{ch.postingDate  | date : 'MM.dd.yyyy'}}</div>
+						<div class='col-lg-6 col-md-6'>End: {{ch.submissionEndDate | date : 'MM.dd.yyyy'}}</div>
+					</div>
+					
+				</div>
+			  <div class="panel-body" ng-show="ch.isDetail" ng-model="ch.isDetail" ng-bind-html="ch.detailedRequirements">
+					
+			  </div>
+			</div>
+		  </div>
+		</div>
+	</div>
+	 <!--/form-->
+  </body>
+</html>
